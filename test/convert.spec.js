@@ -60,8 +60,8 @@ const shouldFail = (value, expected) => {
 
     expect(result.error).to.not.be.null;
     expect(result.error.name).to.be.equal('ValidationError');
-    if (expected) expect(result.error.message).to.be.equal(`${expected} is an invalid argument`);
-    else expect(result.error.message).to.match(/is an invalid argument/);
+    if (expected) expect(result.error.message).to.be.equal(`${expected} is not a Decimal or could not be cast to a Decimal`);
+    else expect(result.error.message).to.match(/is not a Decimal or could not be cast to a Decimal/);
   });
 };
 

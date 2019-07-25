@@ -22,6 +22,6 @@ describe('decimal - init', () => {
 
     expect(result.error).to.not.be.null;
     expect(result.error.name).to.be.equal('ValidationError');
-    expect(result.error.message).to.be.equal('"wrong" is an invalid argument');
+    expect(result.error.message).to.be.equal('"wrong" is not a Decimal or could not be cast to a Decimal');
   });
 });
