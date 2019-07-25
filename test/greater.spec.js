@@ -1,3 +1,8 @@
+'use strict';
+
+/* eslint-env mocha */
+/* eslint-disable no-unused-expressions */
+
 const { expect } = require('chai');
 
 const BaseJoi = require('@hapi/joi');
@@ -21,7 +26,6 @@ const helper = (value, min, shouldSucceed) => {
     if (!shouldSucceed) {
       expect(result.error).to.not.be.null;
       expect(result.error.name).to.be.equal('ValidationError');
-      // expect(result.error.message).to.be.equal(`"${value.toString()}" needs to be greater than "${min.toString()}"`);
     } else {
       expect(result.error).to.be.null;
     }
@@ -134,7 +138,8 @@ describe('decimal - greater', () => {
   helper(1, '1', false);
   helper(1, '-45', true);
   helper(1, '22', false);
-  helper(1, 0144, false);
+  // can't use octal literals in strict mode
+  // helper(1, 0144, false);
   helper(1, '0144', false);
   helper(1, '6.1915', false);
   helper(1, '-1.02', true);

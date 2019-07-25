@@ -10,10 +10,21 @@
     "sourceType":                        "script",
   },
   "rules":                               {
+    "max-len":                           [
+      "error",
+      100,
+      2,
+      {
+        "ignoreUrls":                    true,
+        "ignoreComments":                true,
+        "ignoreRegExpLiterals":          true,
+        "ignoreStrings":                 true,
+        "ignoreTemplateLiterals":        true,
+      }
+    ],
     "func-names":                        ["error", "as-needed"],
-    "no-underscore-dangle": ["error", { "enforceInMethodNames": false }],
-    "no-param-reassign": ["error", { "props": false }],
-    "no-unused-vars": ["error", { "ignoreRestSiblings": true }],
+    "no-underscore-dangle":              ["error", { "enforceInMethodNames": false, "allow": ["_flags"] }],
+    "no-unused-vars":                    ["error", ],
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
   }
 }

@@ -1,3 +1,8 @@
+'use strict';
+
+/* eslint-env mocha */
+/* eslint-disable no-unused-expressions */
+
 const { expect } = require('chai');
 
 const BaseJoi = require('@hapi/joi');
@@ -24,9 +29,7 @@ const shouldFail = (value, sd, rm) => {
     expect(() => {
       const decValidator = Joi.decimal().precision(sd, rm);
 
-      const result = decValidator.validate(value);
-      console.log(value);
-      console.log(result);
+      decValidator.validate(value);
     }).to.throw();
   });
 };

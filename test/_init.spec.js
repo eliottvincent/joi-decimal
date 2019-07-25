@@ -1,7 +1,11 @@
+'use strict';
+
+/* eslint-env mocha */
+/* eslint-disable no-unused-expressions */
+
 const { expect } = require('chai');
 
 const BaseJoi = require('@hapi/joi');
-const Decimal = require('decimal.js');
 const DecimalExtension = require('..');
 
 describe('decimal - init', () => {

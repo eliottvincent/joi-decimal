@@ -1,3 +1,11 @@
+'use strict';
+
+/* eslint-env mocha */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-self-compare */
+/* eslint-disable no-restricted-properties */
+/* eslint-disable no-bitwise */
+
 const { expect } = require('chai');
 
 const BaseJoi = require('@hapi/joi');
@@ -17,7 +25,7 @@ const shouldEqual = (expected, value) => {
 
     expect(result.value.valueOf()).to.satisfy((val) => {
       // If expected and actual are both NaN, consider them equal.
-      if (expected === val || expected !== expected && val !== val) {
+      if (expected === val || (expected !== expected && val !== val)) {
         return true;
       }
       return false;
@@ -37,7 +45,7 @@ const shouldDeepEqual = (coefficient, exponent, sign, value) => {
     let i = 0;
     const len = coefficient.length;
 
-    while (i < len && coefficient[i] === result.value.d[i]) ++i;
+    while (i < len && coefficient[i] === result.value.d[i]) i += 1;
     expect(result.value.d.length).to.be.equal(i);
     expect(result.value.e).to.be.equal(exponent);
     expect(result.value.s).to.be.equal(sign);
@@ -192,7 +200,7 @@ describe('decimal - convert', () => {
   }
 
   // Test random integers against Number.prototype.toString(base).
-  for (var k, i = 0; i < 127; i++) {
+  for (let k, i = 0; i < 127; i += 1) {
     k = randInt();
     shouldEqual(k.toString(), `0b${k.toString(2)}`);
     k = randInt();
@@ -246,15 +254,15 @@ describe('decimal - convert', () => {
   shouldEqual('NaN', '-NaN');
   shouldEqual('NaN', '+NaN');
 
-  shouldFail(' NaN', '\" NaN\"');
-  shouldFail('NaN ', '\"NaN \"');
-  shouldFail(' NaN ', '\" NaN \"');
-  shouldFail(' -NaN', '\" -NaN\"');
-  shouldFail(' +NaN', '\" +NaN\"');
-  shouldFail('-NaN ', '\"-NaN \"');
-  shouldFail('+NaN ', '\"+NaN \"');
-  shouldFail('.NaN', '\".NaN\"');
-  shouldFail('NaN.', '\"NaN.\"');
+  shouldFail(' NaN', '" NaN"');
+  shouldFail('NaN ', '"NaN "');
+  shouldFail(' NaN ', '" NaN "');
+  shouldFail(' -NaN', '" -NaN"');
+  shouldFail(' +NaN', '" +NaN"');
+  shouldFail('-NaN ', '"-NaN "');
+  shouldFail('+NaN ', '"+NaN "');
+  shouldFail('.NaN', '".NaN"');
+  shouldFail('NaN.', '"NaN."');
 
   shouldEqual('Infinity', Infinity);
   shouldEqual('-Infinity', -Infinity);
@@ -262,13 +270,13 @@ describe('decimal - convert', () => {
   shouldEqual('-Infinity', '-Infinity');
   shouldEqual('Infinity', '+Infinity');
 
-  // shouldFail(' Infinity', '\" Infinity \"');
-  shouldFail('Infinity ', '\"Infinity \"');
-  shouldFail(' Infinity ', '\" Infinity \"');
-  shouldFail(' -Infinity', '\" -Infinity\"');
-  shouldFail(' +Infinity', '\" +Infinity\"');
-  shouldFail('.Infinity', '\".Infinity\"');
-  shouldFail('Infinity.', '\"Infinity.\"');
+  // shouldFail(' Infinity', '" Infinity "');
+  shouldFail('Infinity ', '"Infinity "');
+  shouldFail(' Infinity ', '" Infinity "');
+  shouldFail(' -Infinity', '" -Infinity"');
+  shouldFail(' +Infinity', '" +Infinity"');
+  shouldFail('.Infinity', '".Infinity"');
+  shouldFail('Infinity.', '"Infinity."');
 
   shouldEqual('0', 0);
   shouldEqual('-0', -0);
@@ -281,29 +289,29 @@ describe('decimal - convert', () => {
   shouldEqual('0', '0.00000000');
   shouldEqual('-0', '-0.0000000000000000000000');
 
-  shouldFail(' 0', '\" 0\"');
-  shouldFail('0 ', '\"0 \"');
-  shouldFail(' 0 ', '\" 0 \"');
-  shouldFail('0-', '\"0-\"');
-  shouldFail(' -0', '\" -0\"');
-  shouldFail('-0 ', '\"-0 \"');
-  shouldFail('+0 ', '\"+0 \"');
-  shouldFail(' +0', '\" +0\"');
-  shouldFail(' .0', '\" .0\"');
-  shouldFail('0. ', '\"0. \"');
-  shouldFail('+-0', '\"+-0\"');
-  shouldFail('-+0', '\"-+0\"');
-  shouldFail('--0', '\"--0\"');
-  shouldFail('++0', '\"++0\"');
-  shouldFail('.-0', '\".-0\"');
-  shouldFail('.+0', '\".+0\"');
-  shouldFail('0 .', '\"0 .\"');
-  shouldFail('. 0', '\". 0\"');
-  shouldFail('..0', '\"..0\"');
-  shouldFail('+.-0', '\"+.-0\"');
-  shouldFail('-.+0', '\"-.+0\"');
-  shouldFail('+. 0', '\"+. 0\"');
-  shouldFail('.0.', '\".0.\"');
+  shouldFail(' 0', '" 0"');
+  shouldFail('0 ', '"0 "');
+  shouldFail(' 0 ', '" 0 "');
+  shouldFail('0-', '"0-"');
+  shouldFail(' -0', '" -0"');
+  shouldFail('-0 ', '"-0 "');
+  shouldFail('+0 ', '"+0 "');
+  shouldFail(' +0', '" +0"');
+  shouldFail(' .0', '" .0"');
+  shouldFail('0. ', '"0. "');
+  shouldFail('+-0', '"+-0"');
+  shouldFail('-+0', '"-+0"');
+  shouldFail('--0', '"--0"');
+  shouldFail('++0', '"++0"');
+  shouldFail('.-0', '".-0"');
+  shouldFail('.+0', '".+0"');
+  shouldFail('0 .', '"0 ."');
+  shouldFail('. 0', '". 0"');
+  shouldFail('..0', '"..0"');
+  shouldFail('+.-0', '"+.-0"');
+  shouldFail('-.+0', '"-.+0"');
+  shouldFail('+. 0', '"+. 0"');
+  shouldFail('.0.', '".0."');
 
   shouldEqual('1', 1);
   shouldEqual('-1', -1);
@@ -323,36 +331,36 @@ describe('decimal - convert', () => {
   shouldEqual('-1', '-1.000000000000000000000000');
   shouldEqual('1', '+1.000000000000000000000000');
 
-  shouldFail(' 1', '\" 1\"');
-  shouldFail('1 ', '\"1 \"');
-  shouldFail(' 1 ', '\" 1 \"');
-  shouldFail('1-', '\"1-\"');
-  shouldFail(' -1', '\" -1\"');
-  shouldFail('-1 ', '\"-1 \"');
-  shouldFail(' +1', '\" +1\"');
-  // shouldFail('+1 ', '\"+1\"');
-  shouldFail('.1.', '\".1.\"');
-  shouldFail('+-1', '\"+-1\"');
-  shouldFail('-+1', '\"-+1\"');
-  shouldFail('--1', '\"--1\"');
-  shouldFail('++1', '\"++1\"');
-  shouldFail('.-1', '\".-1\"');
-  shouldFail('.+1', '\".+1\"');
-  shouldFail('1 .', '\"1 .\"');
-  shouldFail('. 1', '\". 1\"');
-  shouldFail('..1', '\"..1\"');
-  shouldFail('+.-1', '\"+.-1\"');
-  shouldFail('-.+1', '\"-.+1\"');
-  shouldFail('+. 1', '\"+. 1\"');
-  shouldFail('-. 1', '\"-. 1\"');
-  shouldFail('1..', '\"1..\"');
-  shouldFail('+1..', '\"+1..\"');
-  shouldFail('-1..', '\"-1..\"');
-  shouldFail('-.1.', '\"-.1.\"');
-  shouldFail('+.1.', '\"+.1.\"');
-  shouldFail('.-10.', '\".-10.\"');
-  shouldFail('.+10.', '\".+10.\"');
-  shouldFail('. 10.', '\". 10.\"');
+  shouldFail(' 1', '" 1"');
+  shouldFail('1 ', '"1 "');
+  shouldFail(' 1 ', '" 1 "');
+  shouldFail('1-', '"1-"');
+  shouldFail(' -1', '" -1"');
+  shouldFail('-1 ', '"-1 "');
+  shouldFail(' +1', '" +1"');
+  // shouldFail('+1 ', '"+1"');
+  shouldFail('.1.', '".1."');
+  shouldFail('+-1', '"+-1"');
+  shouldFail('-+1', '"-+1"');
+  shouldFail('--1', '"--1"');
+  shouldFail('++1', '"++1"');
+  shouldFail('.-1', '".-1"');
+  shouldFail('.+1', '".+1"');
+  shouldFail('1 .', '"1 ."');
+  shouldFail('. 1', '". 1"');
+  shouldFail('..1', '"..1"');
+  shouldFail('+.-1', '"+.-1"');
+  shouldFail('-.+1', '"-.+1"');
+  shouldFail('+. 1', '"+. 1"');
+  shouldFail('-. 1', '"-. 1"');
+  shouldFail('1..', '"1.."');
+  shouldFail('+1..', '"+1.."');
+  shouldFail('-1..', '"-1.."');
+  shouldFail('-.1.', '"-.1."');
+  shouldFail('+.1.', '"+.1."');
+  shouldFail('.-10.', '".-10."');
+  shouldFail('.+10.', '".+10."');
+  shouldFail('. 10.', '". 10."');
 
   shouldEqual('123.456789', 123.456789);
   shouldEqual('-123.456789', -123.456789);
@@ -360,27 +368,27 @@ describe('decimal - convert', () => {
   shouldEqual('123.456789', '123.456789');
   shouldEqual('123.456789', '+123.456789');
 
-  // shouldFail(void 0, '\"void 0\"');
-  shouldFail('undefined', '\"undefined\"');
-  shouldFail(null, '\"null\"');
-  shouldFail('null', '\"null\"');
-  // shouldFail({}, '\"{}\"');
-  shouldFail({}, '\"[object Object]\"');
-  shouldFail([], '\"[]\"');
-  shouldFail((() => {}), '\"() => {}\"');
+  // shouldFail(void 0, '"void 0"');
+  shouldFail('undefined', '"undefined"');
+  shouldFail(null, '"null"');
+  shouldFail('null', '"null"');
+  // shouldFail({}, '"{}"');
+  shouldFail({}, '"[object Object]"');
+  shouldFail([], '"[]"');
+  shouldFail((() => {}), '"() => {}"');
   // shouldFail(new Date(), 'new Date');
   // shouldFail(new RegExp(), 'new RegExp');
-  shouldFail('', '\"\"');
-  shouldFail(' ', '\" \"');
-  shouldFail('nan', '\"nan\"');
-  shouldFail('23e', '\"23e\"');
-  shouldFail('e4', '\"e4\"');
-  shouldFail('ff', '\"ff\"');
-  // shouldFail('0xg', '\"oxg\"');
-  shouldFail('0Xfi', '\"0Xfi\"');
-  shouldFail('++45', '\"++45\"');
-  shouldFail('--45', '\"--45\"');
-  shouldFail('9.99--', '\"9.99--\"');
-  shouldFail('9.99++', '\"9.99++\"');
-  shouldFail('0 0', '\"0 0\"');
+  shouldFail('', '""');
+  shouldFail(' ', '" "');
+  shouldFail('nan', '"nan"');
+  shouldFail('23e', '"23e"');
+  shouldFail('e4', '"e4"');
+  shouldFail('ff', '"ff"');
+  // shouldFail('0xg', '"oxg"');
+  shouldFail('0Xfi', '"0Xfi"');
+  shouldFail('++45', '"++45"');
+  shouldFail('--45', '"--45"');
+  shouldFail('9.99--', '"9.99--"');
+  shouldFail('9.99++', '"9.99++"');
+  shouldFail('0 0', '"0 0"');
 });
