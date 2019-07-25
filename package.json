@@ -38,9 +38,7 @@
     "jshint": "^2.10.2"
   },
   "scripts": {
-    "bla": "node bla.js",
     "test": "nyc mocha --full-trace --exit -R spec --sort test/*.spec.js",
-    "test-convert": "nyc mocha --full-trace --exit -R spec test/convert0.spec.js",
     "lint": "npm run eslint && npm run jshint",
     "eslint": "eslint . --max-warnings=100 && echo '✅  ESLINT validated'",
     "jshint": "jshint . && echo '✅  JSHINT validated'"
