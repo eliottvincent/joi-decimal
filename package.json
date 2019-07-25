@@ -1,0 +1,49 @@
+{
+  "name": "joi-decimal-extension",
+  "description": "Joi extension for decimals",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eliottvincent/joi-decimal-extension.git"
+  },
+  "main": "lib/index.js",
+  "keywords": [
+    "joi",
+    "extension",
+    "validation",
+    "schema",
+    "decimal",
+    "decimaljs",
+    "arbitrary",
+    "precision",
+    "arithmetic",
+    "big",
+    "number",
+    "float",
+    "biginteger",
+    "bigdecimal",
+    "bignumber",
+    "bigint",
+    "bignum"
+  ],
+  "dependencies": {
+    "decimal.js": "^10.2.0"
+  },
+  "devDependencies": {
+    "@hapi/joi": "^15.1.0",
+    "chai": "^4.2.0",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "jshint": "^2.10.2"
+  },
+  "scripts": {
+    "bla": "node bla.js",
+    "test": "nyc mocha --full-trace --exit -R spec --sort test/*.spec.js",
+    "test-convert": "nyc mocha --full-trace --exit -R spec test/convert0.spec.js",
+    "lint": "npm run eslint && npm run jshint",
+    "eslint": "eslint . --max-warnings=100 && echo '✅  ESLINT validated'",
+    "jshint": "jshint . && echo '✅  JSHINT validated'"
+  },
+  "license": "ISC"
+}
