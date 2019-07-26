@@ -11,7 +11,7 @@ const DecimalExtension = require('..');
 
 const Joi = BaseJoi.extend(DecimalExtension);
 
-const shouldSucceed = (expected, value, sd, rm, globRm) => {
+const shouldSucceed = (expected, value, sd, rm) => {
   it('should round to a precision', () => {
     const decValidator = Joi.decimal().precision(sd, rm);
 
@@ -19,8 +19,6 @@ const shouldSucceed = (expected, value, sd, rm, globRm) => {
 
     expect(result.error).to.be.null;
     expect(result.value.toString()).to.be.equal(expected);
-
-    if (globRm) expect(Decimal.rounding).to.be.equal(globRm);
   });
 };
 
@@ -48,6 +46,7 @@ describe('decimal - precision', () => {
     });
   });
 
+  // tests from decimal.js documentation
   shouldSucceed('45.6', '45.6');
   shouldSucceed('45.6', new Decimal('45.6'));
   shouldSucceed('5e+1', '45.6', 1);
@@ -57,6 +56,7 @@ describe('decimal - precision', () => {
   shouldSucceed('45.600', '45.6', 5);
   shouldSucceed('45.600', new Decimal('45.6'), 5);
 
+  // tests from decimal.js
   // ---------------------------------------------------------------- v8 start
 
   shouldSucceed('1e+27', '1.2345e+27', 1);

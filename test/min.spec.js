@@ -13,20 +13,20 @@ const Joi = BaseJoi.extend(DecimalExtension);
 
 
 const titles = {
-  success: 'should validate if value is greater than min',
-  error: 'should return a validation error if value is not greater than min',
+  success: 'should validate if value is greater than or equal to min',
+  error: 'should return a validation error if value is not greater than or equal to min',
 };
 
 const helper = (value, min, shouldSucceed) => {
   it(shouldSucceed ? titles.success : titles.error, () => {
-    const decValidator = Joi.decimal().greater(min);
+    const decValidator = Joi.decimal().min(min);
 
     const result = decValidator.validate(value);
 
     if (!shouldSucceed) {
       expect(result.error).to.not.be.null;
       expect(result.error.name).to.be.equal('ValidationError');
-      expect(result.error.message).to.match(/is lower or equal to the limit/);
+      expect(result.error.message).to.match(/is lower than the limit/);
     } else {
       expect(result.error).to.be.null;
     }
@@ -36,7 +36,7 @@ const helper = (value, min, shouldSucceed) => {
 const N = NaN;
 const I = Infinity;
 
-describe('decimal - greater', () => {
+describe('decimal - min', () => {
   before(() => {
     Decimal.set({ defaults: true });
 
@@ -51,8 +51,9 @@ describe('decimal - greater', () => {
   });
 
   // tests from decimal.js documentation
-  helper(0.1, new Decimal(0.3).minus(0.2), false);
-  helper(0, 0.1, false);
+  helper(new Decimal(0.3).minus(0.2), 0.1, true);
+  helper(1, new Decimal(0.3).minus(0.2), true);
+
 
   // tests from decimal.js
   helper(1, 0, true);
@@ -63,10 +64,10 @@ describe('decimal - greater', () => {
   helper(0, -1, true);
   helper(-0, 1, false);
   helper(-0, -1, true);
-  helper(0, 0, false);
-  helper(0, -0, false);
-  helper(-0, 0, false);
-  helper(-0, -0, false);
+  helper(0, 0, true);
+  helper(0, -0, true);
+  helper(-0, 0, true);
+  helper(-0, -0, true);
   helper(0, '0.1', false);
   helper(0, '-0.1', true);
   helper(-0, '0.1', false);
@@ -105,7 +106,7 @@ describe('decimal - greater', () => {
   helper(I, '-999e999', true);
   helper(I, -I, true);
   helper(-I, I, false);
-  helper(-I, -I, false);
+  helper(-I, -I, true);
   helper(I, 123, true);
   helper(3, -I, true);
   helper(1, I, false);
@@ -138,7 +139,7 @@ describe('decimal - greater', () => {
   helper('-5.5', 0, false);
   helper('-5.5', -0, false);
   helper(1, '0', true);
-  helper(1, '1', false);
+  helper(1, '1', true);
   helper(1, '-45', true);
   helper(1, '22', false);
   // can't use octal literals in strict mode
@@ -154,7 +155,7 @@ describe('decimal - greater', () => {
   helper(1, '3.345E-9', true);
   helper(1, '-345.43e+4', true);
   helper(1, '-94.12E+0', true);
-  helper('0', '0', false);
+  helper('0', '0', true);
   helper(3, -0, true);
   helper(9.654, 0, true);
   helper(0, '111.1111111110000', false);
@@ -163,7 +164,7 @@ describe('decimal - greater', () => {
   helper(54, -54, true);
   helper(9.99, '-9.99', true);
   helper('0.0000023432495704937', '-0.0000023432495704937', true);
-  helper(100, 100, false);
+  helper(100, 100, true);
   helper(-999.99, '0.01', false);
   helper('03.333', -4, true);
   helper(-1, -0.1, false);
@@ -367,7 +368,7 @@ describe('decimal - greater', () => {
   helper('0', '-5', true);
   helper('23963.9', '0', true);
   helper('-0.00000045', '0', false);
-  helper('2', '2', false);
+  helper('2', '2', true);
   helper('-3.444', '3', false);
   helper('0.0000016140', '1.5132', false);
   helper('0', '-1', true);
@@ -1038,7 +1039,7 @@ describe('decimal - greater', () => {
   helper('8.3414625e+0', '0e+0', true);
   helper('9.905071e+6', '-5.9541e-4', true);
   helper('1.984307e+4', '-2.4291e-7', true);
-  helper('-1e+0', '-1e+0', false);
+  helper('-1e+0', '-1e+0', true);
   helper('2.060415969e+9', '-2.03455e+2', true);
   helper('3.1982e-19', '-1.993945e+3', true);
   helper('3.093739e+1', '-1.99128676855e+0', true);
