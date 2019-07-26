@@ -1,19 +1,19 @@
-# joi-decimal-extension
+# joi-decimal
 
 Joi extension for Decimal type.
 
 Useful to validate any scientific / financial number.
 
 
-[![Build Status](https://travis-ci.com/eliottvincent/joi-decimal-extension.svg?branch=master)](https://travis-ci.com/eliottvincent/joi-decimal-extension)
-[![npm version](https://badge.fury.io/js/joi-decimal-extension.svg)](http://badge.fury.io/js/joi-decimal-extension)
+[![Build Status](https://travis-ci.com/eliottvincent/joi-decimal.svg?branch=master)](https://travis-ci.com/eliottvincent/joi-decimal)
+[![npm version](https://badge.fury.io/js/joi-decimal.svg)](http://badge.fury.io/js/joi-decimal)
 
 
 ## Usage
 
 ```js
 const BaseJoi = require('@hapi/joi');
-const { DecimalExtension } = require('joi-decimal-extension');
+const { DecimalExtension } = require('joi-decimal');
 const Joi = BaseJoi.extend(DecimalExtension);
 
 const schema = Joi.decimal().precision(2, 4).greater(100.0);
