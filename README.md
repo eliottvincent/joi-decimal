@@ -4,6 +4,8 @@ Joi extension for Decimal type.
 
 Useful to validate any scientific / financial number.
 
+⚠️ do not use `.precision()` for now as it doesn't work as expected.
+It will be fixed in v1.2.0.
 
 [![Build Status](https://travis-ci.com/eliottvincent/joi-decimal.svg?branch=master)](https://travis-ci.com/eliottvincent/joi-decimal)
 [![npm version](https://badge.fury.io/js/joi-decimal.svg)](http://badge.fury.io/js/joi-decimal)
@@ -13,10 +15,13 @@ Useful to validate any scientific / financial number.
 
 ```js
 const BaseJoi = require('@hapi/joi');
-const { DecimalExtension } = require('joi-decimal');
+const DecimalExtension = require('joi-decimal');
 const Joi = BaseJoi.extend(DecimalExtension);
 
-const schema = Joi.decimal().precision(2, 4).greater(100.0);
+const schema = Joi.decimal().greater(100.0);
+
+const result = schema.validate(101.00);
+// result.error === null -> valid
 ```
 
 ## API
